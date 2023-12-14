@@ -1,0 +1,65 @@
+<html xmlnx="http://wwww.w3.org/1999/xhtml">
+<!-- Created by Covert Artisan Ales -->
+<!-- Note: Ensure that your Beersmith settings > Units > Batch Volume Units is set to "gal" -->
+<head>
+<title>$NAME </title> <!-- BeerSmith Value -->
+<script type="text/javascript">
+    // Adjust based on material costs
+    var packageCosts = {
+        'label': 0.37,
+        'can': 0.17,
+        'lid': 0.05,
+        'flat': 0.48,
+        'packtech': 0.16,
+        'shipping': 0.07
+    };
+    
+    // Adjust floats to US Currency Format
+    var USDollar = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    });
+
+    // Get Current Date String
+    function getCurrentDate() {
+        const dateTime = new Date();
+        return dateTime.toDateString();
+    }
+    
+    // Return html header and paragraph of Cost of Goods for BeerSmith report
+    function getCOGs() {
+        var beerName = '$NAME'; // BeerSmith Value
+        var rawTotalCost = '$PRICE'; // BeerSmith Value - requires all cost values are entered
+        var totalCost = parseFloat(rawTotalCost.slice(1));
+        var rawBatchSize = '$DISPLAY_BATCH_SIZE'; // BeerSmith Value - adjust the value to what te total packaged amount is
+        var batchSize = parseFloat(rawBatchSize.split(" ")[0]);
+        var cpg = Math.round(((totalCost / batchSize) + Number.EPSILON) * 100) / 100;
+        var sixtelCOG = cpg * 5.2;
+        var quarterCOG = cpg * 7.75;
+        var halfCOG = cpg * 15.5;
+        var COG = cpg * 7.75;
+        var singleCan12 = (packageCosts.can + packageCosts.lid + packageCosts.label) + packageCosts.shipping + (cpg / 10.6666666667); // 10.6666666667 x 12oz cans in a gallon
+        var caseCan12 = (singleCan12 * 24) + (packageCosts.packtech * 6) + packageCosts.flat;
+        var singleCan16 = (packageCosts.can + packageCosts.lid + packageCosts.label) + packageCosts.shipping + (cpg / 8); // 8 x 16oz cans in a gallon
+        var caseCan16 = (singleCan16 * 24) + (packageCosts.packtech * 6) + packageCosts.flat;
+        return '<h3>Cost of Goods Report Date: ' + getCurrentDate() + '</h3>' +
+            '<p>Beer Name: ' + beerName + 
+            '</br>Cost per Gallon: ' + USDollar.format(cpg) + 
+            '</br>1/6 Barrel Keg: ' + USDollar.format(sixtelCOG) + 
+            '</br>1/4 Barrel Keg: ' + USDollar.format(quarterCOG) +
+            '</br>1/2 Barrel Keg: ' + USDollar.format(halfCOG) +
+            '</br>12 oz Can - Single: ' + USDollar.format(singleCan12) + 
+            '</br>12 oz Can - Case: ' + USDollar.format(caseCan12) +
+            '</br>16 oz Can - Single: ' + USDollar.format(singleCan16) + 
+            '</br>16 oz Can - Case: ' + USDollar.format(caseCan16) + '</p>';
+    }
+</script>
+</head>
+<body>
+<div id="wrapper">
+    <script type="text/javascript">
+    document.write(getCOGs());
+    </script>
+</div>
+</body>
+</html>
