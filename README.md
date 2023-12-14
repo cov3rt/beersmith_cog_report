@@ -1,5 +1,11 @@
 # Custom Report for Beer Smith
 
+Requirements:
+1. Ensure you have the correct costs for ingredients in your recipe.
+2. Copy the recipe to a new location with a new name, possibly append it with a date `example.20231213`.
+3. In the new recipe, adjust the `Batch Size` to your actual volume from kegs and cans.
+4. Preview|Print the recipe and use the cog.htm report
+
 ```
 Cost of Goods Report Date: Wed Dec 13 2023
 
