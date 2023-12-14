@@ -19,3 +19,15 @@ Cost per Gallon: $3.40
 16 oz Can - Single: $1.09
 16 oz Can - Case: $27.48
 ```
+
+Adjust the cog.htm file to reflect your actual package costs. [(cog.htm)](https://github.com/cov3rt/beersmith_cog_report/blob/main/cog.htm?plain=1#L8)
+```
+    var packageCosts = {
+        'label': 0.37,
+        'can': 0.17,
+        'lid': 0.05,
+        'flat': 0.48,
+        'packtech': 0.16,
+        'shipping': 0.07
+    };
+```
